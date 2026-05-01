@@ -16,9 +16,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/health', (req, res) => {
+	let dbStatus = 'disconnected';
+	if (mongoose.connection.readyState === 1) {
+		dbStatus = 'connected';
+	}
+	else{
+		console.error('Database connection is not ready.  Attempting to reconnect.');
+		// Attempt to reconnect to MongoDB
+		connectMongo().catch(err => {
+			console.error('Failed to reconnect to MongoDB:', err);
+		});
+	}
 	res.json({
 		status: 'ok',
-		database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+		database: dbStatus,
 	});
 });
 

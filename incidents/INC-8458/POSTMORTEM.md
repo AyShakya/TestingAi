@@ -1,3 +1,20 @@
+
+# 🛡️ Guardian Incident Postmortem: INC-8458
+**Status:** RESOLVED (Automated Pipeline)
+
+## 🚨 Incident Summary
+- **Service:** checkout-service
+- **Severity:** P2
+
+## 🔍 Root Cause Analysis
+AI triage analysis completed.
+
+## 🛠️ Applied Code Fix
+**File:** `server.js`
+**Reasoning:** The error message in the catch block was only displaying 'error.message', which might not provide complete debugging information. Changed the error logging to output the entire error object ('error') so that all details of the error, including the stack trace, are displayed, making debugging easier.
+**Status:** ✅ Applied
+
+```
 require('dotenv').config();
 
 const express = require('express');
@@ -40,3 +57,10 @@ if (require.main === module) {
 }
 
 module.exports = { app, startServer };
+```
+
+## ✅ Audit Trail
+- **Approver:** _shamky
+- **Decision:** ACCEPTED
+- **PR Created At:** 2026-05-01T16:25:14.207Z
+    

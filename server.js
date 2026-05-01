@@ -15,17 +15,22 @@ app.get('/', (req, res) => {
 	});
 });
 
-app.get('/health', (req, res) => {
+app.get('/health', async (req, res) => {
 	let dbStatus = 'disconnected';
-	if (mongoose.connection.readyState === 1) {
-		dbStatus = 'connected';
-	}
-	else{
-		console.error('Database connection is not ready.  Attempting to reconnect.');
-		// Attempt to reconnect to MongoDB
-		connectMongo().catch(err => {
-			console.error('Failed to reconnect to MongoDB:', err);
-		});
+	try {
+		if (mongoose.connection.readyState === 1) {
+			dbStatus = 'connected';
+		}
+		else{
+			console.error('Database connection is not ready.');
+			await connectMongo();
+			if (mongoose.connection.readyState === 1) {
+							dbStatus = 'connected';
+				}
+		}
+	} catch (error) {
+		console.error('Failed to reconnect to MongoDB:', error);
+		dbStatus = 'error';
 	}
 	res.json({
 		status: 'ok',
@@ -34,16 +39,16 @@ app.get('/health', (req, res) => {
 });
 
 async function startServer() {
-	try {
-		await connectMongo();
-		app.listen(port, () => {
-			console.log(`Server running on port ${port}`);
-			console.log('Connected to MongoDB');
-		});
-	} catch (error) {
-		console.error('Failed to connect to MongoDB:', error);
-		process.exit(1);
-	}
+		try {
+			await connectMongo();
+			app.listen(port, () => {
+				console.log(`Server running on port ${port}`);
+				console.log('Connected to MongoDB');
+			});
+		} catch (error) {
+			console.error('Failed to connect to MongoDB:', error);
+			process.exit(1);
+		}
 }
 
 if (require.main === module) {

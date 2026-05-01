@@ -1,0 +1,26 @@
+{
+  "name": "testingai",
+  "version": "1.0.0",
+  "description": "This repo is used for testing the Guardian AI SRE pipeline.",
+  "homepage": "https://github.com/AyShakya/TestingAi#readme",
+  "bugs": {
+    "url": "https://github.com/AyShakya/TestingAi/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyShakya/TestingAi.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.1"
+  }
+}

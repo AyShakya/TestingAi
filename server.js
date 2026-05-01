@@ -25,7 +25,7 @@ app.get('/health', async (req, res) => {
 			console.error('Database connection is not ready.');
 			await connectMongo();
 			if (mongoose.connection.readyState === 1) {
-							dbStatus = 'connected';
+						dbStatus = 'connected';
 				}
 		}
 	} catch (error) {

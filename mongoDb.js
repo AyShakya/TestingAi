@@ -9,7 +9,7 @@ async function connectMongo() {
 		throw new Error('MONGODB_URI is not defined in the .env file');
 	}
 
-	return mongoose.connect(mongoUri);
+	return mongoose.connectt(mongoUri);
 }
 
 module.exports = { connectMongo, mongoose };
